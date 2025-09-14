@@ -24,6 +24,9 @@ class DetailFragment : Fragment() {
 
         coffeeTitle = view.findViewById(R.id.coffee_title)
         coffeeDesc = view.findViewById(R.id.coffee_desc)
+
+        val coffeeId = arguments?.getInt(COFFEE_ID, 0) ?: 0
+        setCoffeeData(coffeeId)
     }
 
     fun setCoffeeData(id: Int) {
@@ -32,10 +35,12 @@ class DetailFragment : Fragment() {
                 coffeeTitle.text = getString(R.string.affogato_title)
                 coffeeDesc.text = getString(R.string.affogato_desc)
             }
+
             R.id.americano -> {
                 coffeeTitle.text = getString(R.string.americano_title)
                 coffeeDesc.text = getString(R.string.americano_desc)
             }
+
             R.id.latte -> {
                 coffeeTitle.text = getString(R.string.latte_title)
                 coffeeDesc.text = getString(R.string.latte_desc)
@@ -44,7 +49,13 @@ class DetailFragment : Fragment() {
     }
 
     companion object {
-        @JvmStatic
-        fun newInstance() = DetailFragment()
+        private const val COFFEE_ID = "COFFEE_ID"
+
+        fun newInstance(coffeeId: Int) =
+            DetailFragment().apply {
+                arguments = Bundle().apply {
+                    putInt(COFFEE_ID, coffeeId)
+                }
+            }
     }
 }
